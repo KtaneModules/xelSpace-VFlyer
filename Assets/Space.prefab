@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 4424262428482114}
   - component: {fileID: 23229006603763282}
   - component: {fileID: 102425685369703742}
+  - component: {fileID: 114734082320281760}
   m_Layer: 0
   m_Name: CounterText
   m_TagString: Untagged
@@ -60,6 +61,7 @@ GameObject:
   - component: {fileID: 114309944877939906}
   - component: {fileID: 114617581516427464}
   - component: {fileID: 114140107310201250}
+  - component: {fileID: 114655648273528798}
   m_Layer: 0
   m_Name: Space
   m_TagString: Untagged
@@ -409,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceBar: {fileID: 114475692051943734}
+  modSettings: {fileID: 114655648273528798}
   background: {fileID: 23036966653256298}
   displayMesh: {fileID: 102425685369703742}
   spaceMats:
@@ -536,6 +539,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
+--- !u!114 &114655648273528798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308127627532174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -289456416, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: '{"DisplayProgressPartially":true}'
+  SettingsPath: 
+--- !u!114 &114734082320281760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253916607229218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - GUI/KT 3D Text
 --- !u!114 &114876068727864316
 MonoBehaviour:
   m_ObjectHideFlags: 1

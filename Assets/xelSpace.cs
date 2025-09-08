@@ -7,6 +7,7 @@ using System.Linq;
 
 public class xelSpace : MonoBehaviour {
     public KMSelectable spaceBar;
+    public KMModSettings modSettings;
     public MeshRenderer background;
     public TextMesh displayMesh;
     public Material[] spaceMats;
@@ -34,11 +35,13 @@ public class xelSpace : MonoBehaviour {
     int moduleId;
     static int moduleIdCounter = 1;
     int currentChar = 0;
-    bool solved;
+    bool solved, countCharacters = true;
     static List<int>[] storedExpectedSpacePresses;
     List<int> usedQuoteExpectedSpacePresses;
 
     IEnumerator SpaceHandler;
+
+    XelSpaceSettings spaceSettings = new XelSpaceSettings();
 
     static List<int>[] GetSpacesInQuotes(params string[] quotes)
     {
@@ -49,6 +52,18 @@ public class xelSpace : MonoBehaviour {
     void Awake()
     {
         moduleId = moduleIdCounter++;
+        try
+        {
+            var obtainedSettings = new ModConfig<XelSpaceSettings>("XelSpaceSettings");
+            spaceSettings = obtainedSettings.Settings;
+            obtainedSettings.Settings = spaceSettings;
+            countCharacters = spaceSettings.DisplayProgressPartially;
+        }
+        catch
+        {
+            Debug.LogWarningFormat("<Space Settings> Settings do not work as intended! Using default settings!");
+            countCharacters = false;
+        }
         storedExpectedSpacePresses = GetSpacesInQuotes(quotes: allQuotes);
         spaceBar.OnInteract += delegate { PressSpace(); return false; };
     }
@@ -56,21 +71,23 @@ public class xelSpace : MonoBehaviour {
     void Start ()
     {
         spaceIndex = rnd.Range(0, 15);
+        background.material = spaceMats[spaceIndex];
         usedQuote = allQuotes[spaceIndex];
         usedQuoteExpectedSpacePresses = storedExpectedSpacePresses[spaceIndex];
         Debug.LogFormat("[Space #{0}] The quote, without punctuation is \"{1}\".", moduleId, allQuotes[spaceIndex]);
         Debug.LogFormat("[Space #{0}] Press the space bar to begin. Then press the space bar when the Xth characters are spaces: {1}", moduleId, usedQuoteExpectedSpacePresses.Select(a => a + 1).Join(", "));
-        background.material = spaceMats[spaceIndex];
 	}
 
 	void PressSpace ()
     {
+        spaceBar.AddInteractionPunch();
+        sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, spaceBar.transform);
 		if (!solved)
         {
             if (!inputting)
             {
                 currentChar = 0;
-                displayMesh.text = (currentChar + 1).ToString();
+                displayMesh.text = countCharacters ? (currentChar + 1).ToString() : "";
                 displayMesh.color = Color.white;
                 SpaceHandler = HandleSpaceCoroutine();
                 StartCoroutine(SpaceHandler);
@@ -86,7 +103,7 @@ public class xelSpace : MonoBehaviour {
     IEnumerator HandleSpaceCoroutine()
     {
         
-        float storedActivationTime = (int)bomb.GetTime();
+        //float storedActivationTime = (int)bomb.GetTime();
         while (currentChar < usedQuote.Length)
         {
             int storedTime = (int)bomb.GetTime();
@@ -94,8 +111,11 @@ public class xelSpace : MonoBehaviour {
                 yield return null;
             float progress = (float)currentChar / usedQuote.Length;
 
-            displayMesh.color = new Color(1, 1, 1, 1f - (progress * 4f));
-            displayMesh.text = progress >= 0.25f ? "" : (currentChar + 1).ToString();
+            if (countCharacters)
+            {
+                displayMesh.color = new Color(1, 1, 1, 1f - (progress * 4f));
+                displayMesh.text = progress >= 0.25f ? "" : (currentChar + 1).ToString();
+            }
             if (usedQuoteExpectedSpacePresses.Contains(currentChar) ^ pressedSpace)
             {
                 if (!pressedSpace)
@@ -124,7 +144,12 @@ public class xelSpace : MonoBehaviour {
         Debug.LogFormat("[Space #{0}] Module solved.", moduleId);
     }
 
-    IEnumerator TwitchHandleForcedSolve()
+    void TwitchHandleForcedSolve()
+    {
+        StartCoroutine(SpaceAutosolveCoroutine());
+    }
+
+    IEnumerator SpaceAutosolveCoroutine()
     {
         if (!inputting)
             spaceBar.OnInteract();
