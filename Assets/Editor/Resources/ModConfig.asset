@@ -20,6 +20,6 @@ MonoBehaviour:
     - Space Sphere\n\nBeen a while, hasn't it?\n\n[b]This is a reupload of a module
     by the original author. Please unsubscribe/disable the original module here: https://steamcommunity.com/sharedfiles/filedetails/?id=2200738881[/b]\n\nmoduleID:
     xelSpace"
-  version: 1.0
+  version: 1.0.01
   outputFolder: build
   previewImage: {fileID: 2800000, guid: cfd1e0449979ca841a1dcb02a8f807cb, type: 3}

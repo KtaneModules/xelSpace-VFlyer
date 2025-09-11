@@ -13,7 +13,7 @@ public class xelSpace : MonoBehaviour {
     public Material[] spaceMats;
     int spaceIndex;
     string[] allQuotes = new string[] {"Thats one small step for man one giant leap for mankind ",
-    "Space is big Really big You just won't believe how vastly hugely mind bogglingly big it is I mean you may think its a long way down the road to the chemist but thats just peanuts to space ",
+    "Space is big Really big You just wont believe how vastly hugely mind bogglingly big it is I mean you may think its a long way down the road to the chemist but thats just peanuts to space ",
     "Who are we We find that we live on an insignificant planet of a humdrum star lost in a galaxy tucked away in some forgotten corner of a universe in which there are far more galaxies than people ",
     "These are the voyages of the Starship Enterprise Its five year mission to explore strange new worlds to seek out new life and new civilizations to boldly go where no man has gone before ",
     "Space It seems to go on and on forever Then you get to the end and a monkey starts throwing barrels at you ",
@@ -25,7 +25,7 @@ public class xelSpace : MonoBehaviour {
     "If you wish to make an apple pie from scratch you must first invent the universe ",
     "A long time ago in a galaxy far far away ",
     "There are those who believe that life here began out there far across the universe with tribes of humans who may have been the forefathers of the Egyptians or the Toltecs or the Mayans ",
-    "It was the dawn of the third age of mankind, ten years after the Earth Minbari war The Babylon Project was a dream given form ",
+    "It was the dawn of the third age of mankind ten years after the Earth Minbari war The Babylon Project was a dream given form ",
     "And the word went forth to every outpost of humanity and they came the Aries the Gemons the Virgos the Scorpios the Pisceans and the Sagitarrans "};
     string usedQuote;
     bool inputting, pressedSpace;
